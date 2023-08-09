@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles/styles.css')}}" media="screen" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <title>Tienda de SCARA</title>
+  </head>
+  <body>
+    <div class="header">
+      <div class="subheader">
+        <h1>Tienda de de Robots</h1>
+        <button>
+          <a href="{{url_for('index')}}" class="btn btn-primary">Estadísticas Públicas de la Tienda</a>
+        </button>
+      </div>
+      <div class="subheader">
+        <button class="btn btn-primary">Ver Mis Pedidos</button>
+        &nbsp&nbsp&nbsp&nbsp
+        <button class="btn btn-primary">Ver Carrito</button>
+      </div>
+    </div>
+    <div class="grid-container">
+      {% for productox in producto %}
+      <div class="grid-item">
+        <div class="card mb-3" style="max-width: 540px">
+          <div class="row g-0">
+            <div class="col-md-4 imagen-card">
+              <img src= "{{url_for('static', filename='images/robot1.jpg')}}" class="img-fluid rounded-start" alt="..." />
+              
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">Robot {{productox.getIdProducto()}}</h5>
+                <span class="card-text span-p">
+                  Precio: &nbsp
+                  <p class="span-p-p">${{productox.getPrecioProducto()}}</p>
+                </span>
+                <span class="card-text span-p">
+                  Stock: &nbsp
+                  <p class="span-p-p">{{productox.getStock()}} unidades</p>
+                </span>
+                <span class="card-text span-p">
+                  Proveedor: &nbsp
+                  <p class="span-p-p">{{productox.getProveedor()}}</p>
+                </span>
+                <span class="card-text span-p">
+                  Procedencia: &nbsp
+                  <p class="span-p-p">{{productox.getProcedencia()}}</p>
+                </span>
+                <span class="card-text span-p">
+                  ID: &nbsp
+                  <p class="span-p-p">{{productox.getIdProducto()}}</p>
+                </span>
+
+                <form action="{{url_for('guardar_lineaPedido')}}" method="post">
+                  <label for="precio">cantidad</label>
+                  <input required type="number" class="input" placeholder="cantidad" name="cantidad" id="cantidad">
+                  <input type="hidden" class="input" placeholder="id" name="id" id="id" value= "{{productox.getIdProducto()}}">
+                  <input type="hidden" class="input" placeholder="idCliente" name="idCliente" id="idCliente" value="{{cliente}}">
+                  <button type="submit" class="btn btn-primary">Agregar Carrito</button>
+                  <a href="{{url_for('index')}}" class="btn btn-primary">Volver</a>
+              </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </body>
+</html>
